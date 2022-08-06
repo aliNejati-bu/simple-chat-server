@@ -12,7 +12,8 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('messageClient', (message) => {
-        io.emit('messageServer', message);
+        console.log("massage");
+        socket.broadcast.emit('messageServer', message);
     });
 });
 
