@@ -13,7 +13,18 @@ io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('messageClient', (message) => {
         console.log("massage");
-        socket.broadcast.emit('messageServer', message);
+        socket.broadcast.emit('messageServer', {message, sender: socket.username});
+    });
+
+    socket.on('register', (username) => {
+        console.log("user " + username + " registered.");
+        socket.username = username;
+        socket.emit('usernameGot');
+        socket.broadcast.emit('welcome', username);
+    });
+
+    socket.on('disconnect', () => {
+        console.log("user: " + socket.username ?? "unName" + " disconnected!.")
     });
 });
 
